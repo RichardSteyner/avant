@@ -1,0 +1,871 @@
+<apex:page standardController="Contact"
+           	extensions="VFP_PDF_Contact_Controller"
+            applyBodyTag="false"
+            showHeader="false"
+            sidebar="false"
+            renderAs="PDF">
+
+    <head>
+        <title>Trade Custodian Invoice</title>
+        <style>
+            @page {
+                size: 215.9mm 279.4mm;
+                margin: 22px;
+            /*margin-top: 120px;*/
+                margin-bottom: 20px;
+                @top-center {
+                    content: element(header);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+            .page:before {
+                content: counter(page);
+            }
+            .pages:after {
+                content: counter(pages);
+            } 
+            div.header {
+            	padding-top: 18px;
+                position: running(header);
+            }
+            
+            div.footer {
+                padding-bottom: 18px;
+                position: running(footer);
+            }
+            
+            .bold_text{
+                font-weight: bold;
+                line-height: 15px;
+            }
+            
+            hr{
+            	width: 100%;
+            	align: center;
+            }
+            
+            .total{
+            	background-color: black;
+            	color: white;
+            }
+            
+            .customer thead tr {
+            	background-color: black;
+            	color: white;
+            	text-align: center;
+            }
+            
+            .customer tbody tr {
+            	background-color: #CDCDCD;
+            	text-align: center;
+            }
+            
+            .items thead tr {
+            	background-color: #ADD8E6;
+            	color: black;
+            	text-align: center;
+            }
+            
+            th.all_border, td.all_border{
+            	border: 1px solid black;
+            	padding-right: 6px;
+            	padding-left: 6px;
+            }
+            
+            .fields tr td{            
+                padding-bottom: 12px;
+            }
+            
+            .contact-img { max-height: 120px; }
+            
+            .contact_name{
+            	font-size: 36px;
+                line-height: 15px;
+            }
+            .contact_title{
+            	font-size: 20px;
+            }
+            .section_header{
+            	font-size: 24px;
+                line-height: 3px;
+            	padding-left: 10px;
+            }
+            .section{
+            	margin-top: 30px;
+            }
+            .label_field{
+                font-size: 18px;
+            }
+           .div_contact{
+            	margin-top: 50px;
+            	background-color: #87CEEB;
+            	text-align: center;
+            	color: white;
+				border: 1px solid black;
+            	padding-bottom: 12px;
+            	font-weight: bold;
+            	font-size: 22px;
+            }
+            .header_related{
+            	margin-top: 30px;
+            	padding-left: 15px;
+            	background-color: #c4cbd4;
+            	padding-bottom: 12px;
+            	padding-top: 12px;
+            	font-weight: 900;
+            }
+            .related_items thead tr {
+            	background-color: #f5f5f5;
+            	color: black;
+            	text-align: center;
+            }
+            
+            th.related_all_border, td.related_all_border{
+            	border: 1px solid black;
+            	padding-right: 6px;
+            	padding-left: 6px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="header">
+            <table cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td width="25%" valign="top" align="left">&nbsp;</td>
+                    <td width="60%" valign="center"></td>
+                    <td width="15%" valign="top" align="left"><img width="100%" src="{!URLFOR($Resource.AvantGlobalLogo)}" /></td>
+                </tr>
+            </table>
+            <br/>
+        </div>
+        
+        <div style="page-break-after:always;">
+            <table cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td width="25%" valign="top" align="left">
+                    	<apex:image value="{!URLFOR($Resource.PictureUploader, '/default-avatar.png')}" rendered="{!NOT( hasPicture )}" styleClass="contact-img" />
+                        <!--<apex:image value="/servlet/servlet.FileDownload?file={!file.Id}" rendered="{!hasPicture}" styleClass="contact-img" />-->
+                        <apex:outputpanel rendered="{!hasPicture}">
+                        	<img width="100%" src="/servlet/servlet.FileDownload?file={!file.Id}" />
+                        </apex:outputpanel>
+                    </td>
+                    <td width="57.5%" valign="center" style="padding-left: 10px;">
+                        <span class="contact_name">{!Contact.Name}</span><br/>
+                        <p class="contact_title">
+                            Yusuf Bin Ahmed Kanoo Group<br/>
+                        	{!Contact.Job_Title__c}
+                        </p>
+                    </td>
+                    <td width="17.5%" valign="top" align="left">&nbsp;</td>
+                </tr>
+            </table>
+            
+            <div class="section">
+                <span class="section_header">Context</span>
+                <hr/>
+                <p>
+                    {!Contact.Context__c}
+                </p>
+                <p>
+                    <span class="label_field">Introduced By: </span> {!Contact.ReportsTo.Name}
+                </p>
+            </div>
+            
+            <div class="section">
+                <span class="section_header">Contact Information</span>
+                <hr/>
+                <table cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td width="50%" valign="top" align="left">
+                            <span class="label_field">Office: </span> {!Contact.Phone}<br/>
+                            <span class="label_field">Mobile: </span> {!Contact.MobilePhone}<br/>
+                            <span class="label_field">Email: </span> {!Contact.Email}<br/>
+                            <span class="label_field">Website: </span> {!Contact.Website__c}<br/>
+                        </td>
+                        <td width="50%" valign="top">
+                            <span class="label_field">Office Address: </span><br/>
+                            {!Contact.MailingStreet}<br/> 
+                            {!Contact.MailingCity}, {!Contact.MailingState} {!Contact.MailingPostalCode}<br/>
+                            {!Contact.MailingCountry}<br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section">
+                <span class="section_header">Assistant Information</span>
+                <hr/>
+                <table cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td width="33%" valign="top" align="left">
+                            <span class="label_field">Assistant Name: </span>{!Contact.AssistantName}<br/>
+                        </td>
+                        <td width="33%" valign="top">
+                            <span class="label_field">Email: </span>{!Contact.Asst_Email__c}<br/>
+                        </td>
+                        <td width="33%" valign="top">
+                            <span class="label_field">Phone: </span>{!Contact.AssistantPhone}<br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section">
+                <span class="section_header">Context Data</span>
+                <hr/>
+                <table cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td width="60%" valign="top" align="left">
+                            <span class="label_field">Sector: </span> {!Contact.Sector__c}<br/>
+                            <span class="label_field">Industry: </span> {!Contact.Industry__c}<br/>
+                            <span class="label_field">Sub-Industry: </span> {!Contact.Sub_Industry__c}<br/>
+                        </td>
+                        <td width="40%" valign="top">
+                            <span class="label_field">Goal: </span> {!Contact.Goal__c}<br/>
+                            <span class="label_field">Niche: </span> {!Contact.Niche_Theme__c}<br/>
+                            <span class="label_field">Role: </span> {!Contact.Role__c}<br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section">
+                <span class="section_header">Demographic Data</span>
+                <hr/>
+                <table cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td width="60%" valign="top" align="left">
+                            <span class="label_field">Strength of Relationship: </span> {!Contact.Strength_of_Relationship__c}<br/>
+                            <span class="label_field">Openness to Communicaton: </span> {!Contact.Open_to_Communication__c}<br/>
+                            <span class="label_field">Communication Method: </span> {!Contact.Communication_Method__c}<br/><br/>
+                            <span class="label_field">Wealth: </span> {!Contact.Wealth__c}<br/>
+                            <span class="label_field">Age: </span> {!Contact.Age__c}<br/>
+                        </td>
+                        <td width="40%" valign="top">
+                            <span class="label_field">Willingness to Participate: </span> {!Contact.Willingness_to_Participate__c}<br/>
+                            <span class="label_field">Maslo-Hierarchy: </span> {!Contact.Maslo_Hierarchy__c}<br/>
+                            <span class="label_field">Politics: </span> {!Contact.Politics__c}<br/><br/>
+                            <span class="label_field">Spouse: </span> {!Contact.Spouse__c}<br/>
+                            <span class="label_field">Birthday: </span> <apex:outputText value="{0, date, MM'-'dd'-'yyyy}"><apex:param value="{!Contact.Birthdate}" /></apex:outputText><br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div style="page-break-after:always;">
+        	<div class="section">
+                <span class="section_header">Investor Profile</span>
+                <hr/>
+                <p>
+                    <span class="label_field">Role: </span> {!Contact.Investor_Role__c}<br/><br/>
+                    <span class="label_field">Asset Allocation Interest: </span> {!Contact.Asset_Allocation_Interest__c}<br/><br/>
+                    <span class="label_field">Risk Profile: </span> {!Contact.Risk_Profile__c}
+                </p>
+                <p>
+                    <span class="label_field">Investment Sizes: </span> <br/>
+                    {!Contact.Investment_Sizes__c}
+                </p>
+                <p>
+                    <span class="label_field">Deal/Company Sizes: </span> <br/>
+                    {!Contact.Deal_Company_Sizes__c}
+                </p>
+                <p>
+                    <span class="label_field">Governance Requirements: </span> <br/>
+                    {!Contact.Governance_Requirements__c}
+                </p>
+                <p>
+                    <span class="label_field">Investment Next Step: </span> <br/>
+                    {!Contact.Investment_Next_Steps__c}
+                </p>
+                <p>
+                    <span class="label_field">Structure: </span> <br/>
+                    {!Contact.Structure__c}
+                </p>
+                <p>
+                    <span class="label_field">Investment Stage: </span> <br/>
+                    {!Contact.Investment_Stage__c}
+                </p>
+                <p>
+                    <span class="label_field">Investment Industries: </span> <br/>
+                    {!Contact.Investment_Industries__c}
+                </p>
+            </div>
+            
+            <div class="section">
+                <span class="section_header">Investor Profile Notes</span>
+                <hr/>
+                <p>
+                    <span class="label_field">Asset Allocation Notes: </span> <br/>
+                    {!Contact.Asset_Allocation_Notes__c}
+                </p>
+                <p>
+                    <span class="label_field">Areas To Avoid: </span> <br/>
+                    {!Contact.Areas_To_Avoid__c}
+                </p>
+                <p>
+                    <span class="label_field">Investment Stage Notes: </span> <br/>
+                    {!Contact.Investment_Stage_Notes__c}
+                </p>
+                <p>
+                    <span class="label_field">Investment Industry Notes: </span> <br/>
+                    {!Contact.Investment_Industry_Notes__c}
+                </p>
+                <p>
+                    <span class="label_field">Deal/Company Size Notes: </span> <br/>
+                    {!Contact.Deal_Company_Size_Notes__c}
+                </p>
+                <p>
+                    <span class="label_field">Next Step Notes: </span> <br/>
+                    {!Contact.Next_Step_Notes__c}
+                </p>
+            </div>
+        </div>
+        
+        <div style="page-break-after:always;">
+            <div class="section">
+                <span class="section_header">Introductions</span>
+                <hr/>
+                <table border="0" cellspacing="0" width="100%" class="items">
+                    <thead>
+                            <tr>
+                                <th class="all_border" width="10%">#</th>
+                                <th class="all_border" width="25%">Introduction Name</th>
+                                <th class="all_border" width="15%">Contact</th>
+                                <th class="all_border" width="15%">Contact</th>
+                                <th class="all_border" width="15%">Contact</th>
+                                <th class="all_border" width="15%">Type of Introduction</th>
+                                <th class="all_border" width="15%">Introduction Date</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <apex:variable var="count" value="{!1}" />
+                        <apex:repeat value="{!introductions}" var="introduction" >                   
+                                <tr>
+                                    <td  class="all_border" align="right">{!count}</td>
+                                    <td  class="all_border">{!introduction.Name}</td>
+                                    <td  class="all_border">{!introduction.Contact__r.Name}</td>
+                                    <td  class="all_border">{!introduction.Contact2__r.Name}</td>
+                                    <td  class="all_border">{!introduction.Contact_3__r.Name}</td>
+                                    <td  class="all_border">{!introduction.Type_of_Introduction__c}</td>
+                                    <td  class="all_border"><apex:outputText value="{0, date, MM'-'dd'-'yyyy}"><apex:param value="{!introduction.Introduction_Date__c}" /></apex:outputText></td>
+                                </tr>
+                                <apex:variable var="count" value="{!count + 1}" />
+                        </apex:repeat>
+                        <tr style="height: 2px; background-color: black;">
+                            <td colspan="7"></td>
+                        </tr>    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div style="page-break-after:always;">
+            <div class="div_contact">
+                <span>{!Contact.Name} - Update</span>
+            </div>
+            <div class="section">
+                <span class="section_header">July 8th, 2020</span>
+                <hr/>
+                Discussion Items:
+                <ol>
+                    <li>Goal: Understand Kanoo brother's investment outlook &amp; asset allocation.</li>
+                    <li>They're looking for direct participation in companies</li>
+                    <li>
+                        Ventura Capital
+                    	<ul style="list-style-type: none;">
+                            <li>- Series C +</li>
+                            <li>- Geography Agnostic</li>
+                            <li>- Digital Assets / Blockchain</li>
+                            <li>- E-Signatures</li>
+                            <li>- Big Data</li>
+                            <li>- Distance learning</li>
+                            <li>- E-Health</li>
+                            <li>- Ticket Size: Anywhere between $200k to $4M</li>
+                            <li>- No infraestructure for Due Diligence, hence prefer to co-invest with either people/entities they know or other notorious investors.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Real State
+                    	<ul style="list-style-type: none;">
+                            <li>- Dividend Generator</li>
+                            <li>- No Greenfield</li>
+                            <li>- Right Partner</li>
+                            <li>- Prefers USA, UK, France, Belgium, Netherlands</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Currency Hedge
+                    	<ul style="list-style-type: none;">
+                            <li>- Open but no particularly interested.</li>
+                            <li>- Discussed Hong Kong Dollar devaluation, but not much interest.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Mineral Rights Exploitation -- Gold, etc.:
+                    	<ul style="list-style-type: none;">
+                            <li>- Not exposed yet but interested in opportunities uncorrelated to the markets.</li>
+                            <li>- Would like to see more opportunities like this.</li>
+                        </ul>
+                    </li>
+                    <li>Don't mind investing in non Sharia-compliant companies</li>
+                    <li>AG needs to be mindful that Ahmed's brother won't invest in alcohol, but Ahmed would directly</li>
+                    <li>Can do nothing directly linked to Israel, but don't mind Israeli connections, al long as the money doesn't end up in Israeli hands and the company is not based in Israel.</li>
+                    <li>We can SBAR potential opportunities -- they need better due diligence in the US, which we can provide.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div style="page-break-after:always;">
+            <div class="section">
+                <span class="section_header">{!Contact.Name}'s Relationships &amp; Network</span>
+                <hr/>
+                <div>
+                    <!--
+
+                    -->
+                    <table border="0" cellspacing="0" width="100%" class="related_items">
+                        <thead> 
+                            <tr>
+                                <th class="related_all_border" width="20%">Name</th>
+                                <th class="related_all_border" width="20%">Job Title</th>
+                                <th class="related_all_border" width="20%">Company</th>
+                                <th class="related_all_border" width="20%">Office City</th>
+                                <th class="related_all_border" width="20%">Office Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!contactsRelationships}" var="cr" >                   
+                                    <tr>
+                                        <td  class="related_all_border" style="{!IF(cr.typeRelation=='child' ,'padding-left: 20px;', IF(cr.typeRelation=='grandchild' ,'padding-left: 40px;','padding-left: 60px;'))}">
+                                            {!cr.contact.FirstName} {!cr.contact.LastName}
+                                        </td>
+                                        <td  class="related_all_border">
+                                            {!cr.contact.Job_Title__c}
+                                        </td>
+                                        <td  class="related_all_border">
+                                            {!cr.contact.Company__c}
+                                        </td>
+                                        <td  class="related_all_border">
+                                            {!cr.contact.MailingCity}
+                                        </td>
+                                        <td  class="related_all_border">
+                                            {!cr.contact.MailingCountry}
+                                        </td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="5"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div style="page-break-after:always;">
+            <div class="section">
+                <span class="section_header">{!Contact.Name}'s Lists</span>
+                <hr/>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Investor_Lists__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Investor Lists ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="90%">Investor List Name</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Investor_Lists__r}" var="investor" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!investor.Investor_List__r.Name}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="2"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Lists__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        AG Lists ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="90%">AG List Name</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Lists__r}" var="ag" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!ag.List__r.Name}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="2"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Travel_Lists__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Travel Lists ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="72%">Travel List Name</th>
+                                    <th class="related_all_border" width="18%">City</th>
+                                    <!--<th class="related_all_border" width="23%">Category</th>
+                                        <th class="related_all_border" width="14%">Year Met</th>-->
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Travel_Lists__r}" var="travel" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!travel.Travel_List__r.Name}</td>
+                                        <td  class="related_all_border">{!travel.City__r.Name}</td>
+                                        <!--<td  class="related_all_border">{!travel.Category__c}</td>
+                                            <td  class="related_all_border">{!travel.Year_Met__c}</td>-->
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="5"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Deals__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Deals ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="15%">Deal Name</th>
+                                    <th class="related_all_border" width="15%">Type</th>
+                                    <th class="related_all_border" width="15%">Date</th>
+                                    <th class="related_all_border" width="15%">Sent To</th>
+                                    <th class="related_all_border" width="15%">Sent By</th>
+                                    <th class="related_all_border" width="15%">Notes</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Deals__r}" var="deal" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!deal.Name}</td>
+                                        <td  class="related_all_border">{!deal.Type__c}</td>
+                                        <td  class="related_all_border"><apex:outputText value="{0, date, MM'-'dd'-'yyyy}"><apex:param value="{!deal.Date__c}" /></apex:outputText></td>
+                                        <td  class="related_all_border">{!deal.Sent_To__r.Name}</td>
+                                        <td  class="related_all_border">{!deal.Sent_By__r.Name}</td>
+                                        <td  class="related_all_border">{!deal.Notes__c}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="7"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Opportunities}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Opportunities ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="7%">#</th>
+                                    <th class="related_all_border" width="12%">Opportunity Name</th>
+                                    <th class="related_all_border" width="11%">Facilitator</th>
+                                    <th class="related_all_border" width="11%">Stage</th>
+                                    <th class="related_all_border" width="11%">Amount</th>
+                                    <th class="related_all_border" width="16%">Notes</th>
+                                    <th class="related_all_border" width="11%">Appointment Type</th>
+                                    <th class="related_all_border" width="10%">Status</th>
+                                    <th class="related_all_border" width="11%">Lead</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Opportunities}" var="opp" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!opp.Name}</td>
+                                        <td  class="related_all_border">{!opp.Facilitator__c}</td>
+                                        <td  class="related_all_border">{!opp.StageName}</td>
+                                        <td  class="related_all_border">{!opp.Amount}</td>
+                                        <td  class="related_all_border">{!opp.Notes__c}</td>
+                                        <td  class="related_all_border">{!opp.Appointment_Type__c}</td>
+                                        <td  class="related_all_border">{!opp.Status__c}</td>
+                                        <td  class="related_all_border">{!opp.Lead__c}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="9"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        Scheduling ({!schedulings.size})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(schedulings.size==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="17%">Call/Metting Name</th>
+                                    <th class="related_all_border" width="13%">Appoinment Type</th>
+                                    <th class="related_all_border" width="13%">Status</th>
+                                    <th class="related_all_border" width="15%">Lead</th>
+                                    <th class="related_all_border" width="14%">Confirmed For</th>
+                                    <th class="related_all_border" width="18%">Notes</th> 
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!schedulings}" var="scheduling" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!scheduling.Name}</td>
+                                        <td  class="related_all_border">{!scheduling.Type__c}</td>
+                                        <td  class="related_all_border">{!scheduling.Status__c}</td>
+                                        <td  class="related_all_border">{!scheduling.Lead__r.Name}</td>
+                                        <td  class="related_all_border">
+                                            <apex:outputText value="{0, date, MM'-'dd'-'yyyy}">
+                                                <apex:param value="{! scheduling.Confirmed_Date__c }"/>
+                                            </apex:outputText>
+                                        </td>
+                                        <td  class="related_all_border">{!scheduling.Notes__c}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="7"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div style="page-break-after:always;">
+            <div class="section">
+                <span class="section_header">{!Contact.Name} Lists</span>
+                <hr/>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Folder_List__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Folder List ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="45%">Folder Name</th>
+                                    <th class="related_all_border" width="45%">Folder Color</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Folder_List__r}" var="folder" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!folder.Folder_Name__r.Name}</td>
+                                        <td  class="related_all_border">{!folder.Folder_Color__c}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="3"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Agreement_List__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Agreement List ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="30%">Client</th>
+                                    <th class="related_all_border" width="25%">Entity</th>
+                                    <th class="related_all_border" width="15%">Audit Status</th>
+                                    <th class="related_all_border" width="20%">Vertical</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Agreement_List__r}" var="aggreement" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!aggreement.Name}</td>
+                                        <td  class="related_all_border">{!aggreement.Entity__c}</td>
+                                        <td  class="related_all_border">{!aggreement.Audit_Status__c}</td>
+                                        <td  class="related_all_border">{!aggreement.Vertical__c}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="5"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="header_related">
+                        <apex:variable var="count" value="{!0}" />
+                        <apex:repeat value="{!Contact.Follow_Ups__r}" var="row">
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                        Follow Ups ({!count})
+                    </div>
+                    <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
+                        <thead>
+                                <tr>
+                                    <th class="related_all_border" width="10%">#</th>
+                                    <th class="related_all_border" width="25%">Name</th>
+                                    <th class="related_all_border" width="25%">Event</th>
+                                    <th class="related_all_border" width="40%">Vertical</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="count" value="{!1}" />
+                            <apex:repeat value="{!Contact.Follow_Ups__r}" var="follow" >                   
+                                    <tr>
+                                        <td  class="related_all_border" align="right">{!count}</td>
+                                        <td  class="related_all_border">{!follow.Name}</td>
+                                        <td  class="related_all_border">{!follow.Event__c}</td>
+                                        <td  class="related_all_border">{!follow.Personal_Message__c}</td>
+                                    </tr>
+                                    <apex:variable var="count" value="{!count + 1}" />
+                            </apex:repeat>
+                            <tr style="height: 2px; background-color: black;">
+                                <td colspan="4"></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div>
+            <table cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td width="25%" valign="top" align="left">
+                    	<apex:image value="{!URLFOR($Resource.PictureUploader, '/default-avatar.png')}" rendered="{!NOT( hasPicture )}" styleClass="contact-img" />
+                        <!--<apex:image value="/servlet/servlet.FileDownload?file={!file.Id}" rendered="{!hasPicture}" styleClass="contact-img" />-->
+                        <apex:outputpanel rendered="{!hasPicture}">
+                        	<img width="100%" src="/servlet/servlet.FileDownload?file={!file.Id}" />
+                        </apex:outputpanel>
+                    </td>
+                    <td width="57.5%" valign="center" style="padding-left: 10px;">&nbsp;</td>
+                    <td width="17.5%" valign="top" align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                	<td colspan="3">
+                        <h3>{!Contact.Name}</h3>
+                       	<h3>{!Contact.LastName} Group, {!Contact.Job_Title__c}</h3>
+                        <p>
+                            Kanoo (Arabic) is the family name of an Arab business family, controlling the Yusuf Bin Ahmed Kanoo Group.
+                        </p>
+                        <p>
+                            The family is based in Bahrain, and has wings in several Persian Gulf countries controlling the family's business interests.
+                        </p>
+                        <p>
+                            Beginning as traders in Bahrain, which at the time was a British protectorate, the Kanoo family 
+							expanded into shipblng, sending different branches of the family to establish themselves — 
+							eventually becoming citizens — in the IJAE, Oman, Saudi Arabia and Qatar. Today, the Kanoo 
+							Group's actiV1ties in each of the countries are managed by the local family wing, though they all 
+							remain under the ultimate control, and ownership, of the Bahrain-based Yusuf Bin Ahmed 
+							Kanoo Holdings. 
+                        </p>
+                        <p>
+                            The Kanoo Group is one of tne largest and olõest independent family-owned grgup of 
+							companies in tne Persian Gult regiom Establisned in Bahrain in 1890 by Yusut Ahmed Kanoo it 
+							grew trom its early trading and shipping business to become one ot the most diversitied 
+                            business nouses in the Persian Gulf region and beyond. 
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        
+        <!--<div class="footer">
+            <img src="https://docs.google.com/document/d/e/2PACX-1vS_uCZB5_fy_1Dm7zTsexl79xjpykmJ7ZMfKGHKBLG4GAQQiTpfASZIu3M09Zkg2HbmITrPOi8jmssP/pub"/>
+        	<hr/>
+            <p style="text-align: center;">
+                3500 West Olive Ave., Suite 730, Burbank, CA 951505 | (800) 355-2116 | www.BirchGold.com
+            </p>
+        </div>-->
+        
+    </body>
+    
+</apex:page>
