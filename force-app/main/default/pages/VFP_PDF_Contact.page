@@ -370,7 +370,7 @@
             <div class="section">
                 <span class="section_header">July 8th, 2020</span>
                 <hr/>
-                Discussion Items:
+                <!--Discussion Items:
                 <ol>
                     <li>Goal: Understand Kanoo brother's investment outlook &amp; asset allocation.</li>
                     <li>They're looking for direct participation in companies</li>
@@ -415,7 +415,8 @@
                     <li>AG needs to be mindful that Ahmed's brother won't invest in alcohol, but Ahmed would directly</li>
                     <li>Can do nothing directly linked to Israel, but don't mind Israeli connections, al long as the money doesn't end up in Israeli hands and the company is not based in Israel.</li>
                     <li>We can SBAR potential opportunities -- they need better due diligence in the US, which we can provide.</li>
-                </ol>
+                </ol>-->
+                <apex:outputText value="{!Contact.Client_Update1__c}" escape="false" />
             </div>
         </div>
         
@@ -832,7 +833,7 @@
                 	<td colspan="3">
                         <h3>{!Contact.Name}</h3>
                        	<h3>{!Contact.LastName} Group, {!Contact.Job_Title__c}</h3>
-                        <p>
+                        <!--<p>
                             Kanoo (Arabic) is the family name of an Arab business family, controlling the Yusuf Bin Ahmed Kanoo Group.
                         </p>
                         <p>
@@ -851,7 +852,8 @@
 							companies in tne Persian Gult regiom Establisned in Bahrain in 1890 by Yusut Ahmed Kanoo it 
 							grew trom its early trading and shipping business to become one ot the most diversitied 
                             business nouses in the Persian Gulf region and beyond. 
-                        </p>
+                        </p>-->
+                        <apex:outputText value="{!Contact.Biography__c}" escape="false" />
                     </td>
                 </tr>
             </table>
