@@ -412,10 +412,7 @@
                                 <th class="box_padding table_borders border_top" width="15%">Contact</th>
                                 <th class="box_padding table_borders border_top" width="15%">Contact</th>
                                 <th class="box_padding table_borders border_top" width="15%">Type of Introduction</th>
-                                <th class="special_Border_cell box_padding table_borders border_top" width="15%">                                    
-                                    <div class="special_Border introductions_border">.</div>
-                                    Introduction Date
-                                </th>
+                                <th class="box_padding table_borders border_top" width="15%">Introduction Date</th>
                             </tr>
                     </thead>
                     <tbody>
@@ -460,10 +457,7 @@
                                 <th class="box_padding table_borders border_top" width="20%">Job Title</th>
                                 <th class="box_padding table_borders border_top" width="20%">Company</th>
                                 <th class="box_padding table_borders border_top" width="20%">Office City</th>
-                                <th class="special_Border_cell box_padding table_borders border_top" width="20%">
-                                    <div class="special_Border relationships_Network_border">.</div>
-                                    Office Country
-                                </th>
+                                <th class="box_padding table_borders border_top" width="20%">Office Country</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -511,10 +505,7 @@
                         <thead>
                                 <tr>
                                     <th class="box_padding table_borders border_top border_left" width="10%">#</th>
-                                    <th class="special_Border_cell box_padding table_borders border_top" width="90%">
-                                        <div class="special_Border relationships_Network_border">.</div>
-                                        Investor List Name
-                                    </th>
+                                    <th class="box_padding table_borders border_top" width="90%">Investor List Name</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -544,7 +535,7 @@
                         <thead>
                                 <tr>
                                     <th class="box_padding table_borders border_top border_left" width="10%">#</th>
-                                    <th class="box_padding table_borders border_top border_left" width="90%">AG List Name</th>
+                                    <th class="box_padding table_borders border_top" width="90%">AG List Name</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -572,8 +563,8 @@
                         <thead>
                                 <tr>
                                     <th class="box_padding table_borders border_top border_left" width="10%">#</th>
-                                    <th class="box_padding table_borders border_top border_left" width="72%">Travel List Name</th>
-                                    <th class="box_padding table_borders border_top border_left" width="18%">City</th>
+                                    <th class="box_padding table_borders border_top" width="72%">Travel List Name</th>
+                                    <th class="box_padding table_borders border_top" width="18%">City</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -602,12 +593,12 @@
                         <thead>
                                 <tr>
                                     <th class="box_padding table_borders border_top border_left" width="10%">#</th>
-                                    <th class="box_padding table_borders border_top border_left" width="15%">Deal Name</th>
+                                    <th class="box_padding table_borders border_top" width="15%">Deal Name</th>
                                     <th class="box_padding table_borders border_top" width="15%">Type</th>
                                     <th class="box_padding table_borders border_top" width="15%">Date</th>
-                                    <th class="box_padding table_borders border_top border_left" width="15%">Sent To</th>
+                                    <th class="box_padding table_borders border_top" width="15%">Sent To</th>
                                     <th class="box_padding table_borders border_top" width="15%">Sent By</th>
-                                    <th class="box_padding table_borders border_top border_left" width="15%">Notes</th>
+                                    <th class="box_padding table_borders border_top" width="15%">Notes</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -678,12 +669,12 @@
                         <thead>
                                 <tr>
                                     <th class="box_padding table_borders border_top border_left" width="10%">#</th>
-                                    <th class="box_padding table_borders border_top border_left" width="17%">Call/Metting Name</th>
+                                    <th class="box_padding table_borders border_top" width="17%">Call/Metting Name</th>
                                     <th class="box_padding table_borders border_top" width="13%">Appoinment Type</th>
                                     <th class="box_padding table_borders border_top" width="13%">Status</th>
-                                    <th class="box_padding table_borders border_top border_left" width="15%">Lead</th>
+                                    <th class="box_padding table_borders border_top" width="15%">Lead</th>
                                     <th class="box_padding table_borders border_top" width="14%">Confirmed For</th>
-                                    <th class="box_padding table_borders border_top border_left" width="18%">Notes</th> 
+                                    <th class="box_padding table_borders border_top" width="18%">Notes</th> 
                                 </tr>
                         </thead>
                         <tbody>
@@ -729,10 +720,7 @@
                                 <tr>
                                     <th class="box_padding table_borders border_top border_left" width="10%">#</th>
                                     <th class="box_padding table_borders border_top" width="45%">Folder Name</th>
-                                    <th class="special_Border_cell box_padding table_borders border_top" width="45%">
-                                        <div class="special_Border relationships_Network_border">.</div>
-                                        Folder Color
-                                    </th>
+                                    <th class="box_padding table_borders border_top" width="45%">Folder Color</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -764,10 +752,7 @@
                                     <th class="box_padding table_borders border_top" width="30%">Client</th>
                                     <th class="box_padding table_borders border_top" width="25%">Entity</th>
                                     <th class="box_padding table_borders border_top" width="15%">Audit Status</th>
-                                    <th class="special_Border_cell box_padding table_borders border_top" width="20%">
-                                        <div class="special_Border relationships_Network_border">.</div>
-                                        Vertical
-                                    </th>
+                                    <th class="box_padding table_borders border_top" width="20%">Vertical</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -797,20 +782,20 @@
                     <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
                         <thead>
                                 <tr>
-                                    <th class="related_all_border" width="10%">#</th>
-                                    <th class="related_all_border" width="25%">Name</th>
-                                    <th class="related_all_border" width="25%">Event</th>
-                                    <th class="related_all_border" width="40%">Vertical</th>
+                                    <th class="box_padding table_borders border_top border_left" width="10%">#</th>
+                                    <th class="box_padding table_borders border_top" width="25%">Name</th>
+                                    <th class="box_padding table_borders border_top" width="25%">Event</th>
+                                    <th class="box_padding table_borders border_top" width="40%">Vertical</th>
                                 </tr>
                         </thead>
                         <tbody>
                             <apex:variable var="count" value="{!1}" />
                             <apex:repeat value="{!Contact.Follow_Ups__r}" var="follow" >                   
                                     <tr>
-                                        <td  class="related_all_border" align="right">{!count}</td>
-                                        <td  class="related_all_border">{!follow.Name}</td>
-                                        <td  class="related_all_border">{!follow.Event__c}</td>
-                                        <td  class="related_all_border">{!follow.Personal_Message__c}</td>
+                                        <td  class="box_padding table_borders border_left" align="right">{!count}</td>
+                                        <td  class="box_padding table_borders">{!follow.Name}</td>
+                                        <td  class="box_padding table_borders">{!follow.Event__c}</td>
+                                        <td  class="box_padding table_borders">{!follow.Personal_Message__c}</td>
                                     </tr>
                                     <apex:variable var="count" value="{!count + 1}" />
                             </apex:repeat>
