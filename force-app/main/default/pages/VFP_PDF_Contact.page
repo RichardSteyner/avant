@@ -122,7 +122,17 @@
                 -Fs-table-paginate: paginate;
             }
 
+            .related_items_relationships {
+                -Fs-table-paginate: paginate;
+            }
+
             .related_items thead tr {
+            	background-color: #f5f5f5;
+            	color: black;
+            	text-align: center;
+            }
+
+            .related_items_relationships thead tr {
             	background-color: #f5f5f5;
             	color: black;
             	text-align: center;
@@ -151,6 +161,10 @@
 
             .table_borders{
                 border-right: 1px solid black !important;
+                border-bottom: 1px solid black !important;
+            }
+
+            .table_borders_rel{
                 border-bottom: 1px solid black !important;
             }
 
@@ -210,7 +224,7 @@
                     <td width="57.5%" valign="center" style="padding-left: 10px;">
                         <span class="contact_name">{!Contact.Name}</span><br/>
                         <p class="contact_title">
-                            Yusuf Bin Ahmed Kanoo Group<br/>
+                            {!Contact.Company__c}<br/>
                         	{!Contact.Job_Title__c}
                         </p>
                     </td>
@@ -450,33 +464,33 @@
                 <span class="section_header">{!Contact.Name}'s Relationships &amp; Network</span>
                 <hr/>
                 <div>
-                    <table border="0" cellspacing="0" width="100%" class="related_items">
+                    <table border="0" cellspacing="0" width="100%" class="related_items_relationships">
                         <thead> 
                             <tr>
-                                <th class="box_padding table_borders border_top border_left" width="20%">Name</th>
-                                <th class="box_padding table_borders border_top" width="20%">Job Title</th>
-                                <th class="box_padding table_borders border_top" width="20%">Company</th>
-                                <th class="box_padding table_borders border_top" width="20%">Office City</th>
-                                <th class="box_padding table_borders border_top" width="20%">Office Country</th>
+                                <th class="box_padding table_borders_rel  border_right" width="30%">Name</th>
+                                <th class="box_padding table_borders_rel border_right" width="17%">Job Title</th>
+                                <th class="box_padding table_borders_rel border_right" width="17%">Company</th>
+                                <th class="box_padding table_borders_rel border_right" width="18%">Office City</th>
+                                <th class="box_padding table_borders_rel " width="18%">Office Country</th>
                             </tr>
                         </thead>
                         <tbody>
                             <apex:variable var="count" value="{!1}" />
                             <apex:repeat value="{!contactsRelationships}" var="cr" >                   
                                     <tr>
-                                        <td  class="box_padding table_borders border_left" style="{!IF(cr.typeRelation=='child' ,'padding-left: 20px;', IF(cr.typeRelation=='grandchild' ,'padding-left: 40px;','padding-left: 60px;'))}">
+                                        <td  class="box_padding table_borders_rel" style="{!IF(cr.typeRelation=='child' ,'padding-left: 20px;', IF(cr.typeRelation=='grandchild' ,'padding-left: 40px;','padding-left: 60px;'))}">
                                             {!cr.contact.FirstName} {!cr.contact.LastName}
                                         </td>
-                                        <td  class="box_padding table_borders">
+                                        <td  class="box_padding table_borders_rel">
                                             {!cr.contact.Job_Title__c}
                                         </td>
-                                        <td  class="box_padding table_borders">
+                                        <td  class="box_padding table_borders_rel">
                                             {!cr.contact.Company__c}
                                         </td>
-                                        <td  class="box_padding table_borders">
+                                        <td  class="box_padding table_borders_rel">
                                             {!cr.contact.MailingCity}
                                         </td>
-                                        <td  class="box_padding table_borders">
+                                        <td  class="box_padding table_borders_rel">
                                             {!cr.contact.MailingCountry}
                                         </td>
                                     </tr>
