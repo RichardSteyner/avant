@@ -97,10 +97,10 @@
             	margin-top: 30px;
             }
             .label_field{
-                font-size: 18px;
+            	font-weight: bold;
             }
            .div_contact{
-            	margin-top: 50px;
+            	margin-top: 30px;
             	background-color: #87CEEB;
             	text-align: center;
             	color: white;
@@ -270,13 +270,13 @@
                 <table cellspacing="0" border="0" width="100%">
                     <tr>
                         <td width="33%" valign="top" align="left">
-                            <span class="label_field">Assistant Name: </span>{!Contact.AssistantName}<br/>
+                            <span class="label_field">Assistant Name: <br/></span>{!Contact.AssistantName}<br/>
                         </td>
                         <td width="33%" valign="top">
-                            <span class="label_field">Email: </span>{!Contact.Asst_Email__c}<br/>
+                            <span class="label_field">Email: <br/></span>{!Contact.Asst_Email__c}<br/>
                         </td>
                         <td width="33%" valign="top">
-                            <span class="label_field">Phone: </span>{!Contact.AssistantPhone}<br/>
+                            <span class="label_field">Phone: <br/></span>{!Contact.AssistantPhone}<br/>
                         </td>
                     </tr>
                 </table>
@@ -332,50 +332,50 @@
                 <table border="0" cellspacing="0" width="100%" class="items">
                     <tbody>
                         <tr>
-                            <td width="25%">Role: </td>
+                            <td width="25%"><span class="label_field">Role: </span></td>
                             <td width="75%"> {!Contact.Investor_Role__c} </td>
                         </tr>
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Asset Allocation Interest: </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Asset Allocation Interest: </span></td>
                             <td  class="vertical_align_top padding_top" width="75%"> {!Contact.Asset_Allocation_Interest__c} </td>
                         </tr>
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Risk Profile: </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Risk Profile: </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Risk_Profile__c}</td>
                         </tr>
 
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Investment Sizes:  </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Investment Sizes:  </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Investment_Sizes__c}</td>
                         </tr>
 
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Deal/Company Sizes: </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Deal/Company Sizes: </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Deal_Company_Sizes__c}</td>
                         </tr>
 
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Governance Requirements: </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Governance Requirements: </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Governance_Requirements__c}</td>
                         </tr>
 
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Investment Next Step:  </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Investment Next Step: </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Investment_Next_Steps__c}</td>
                         </tr>
                         
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Structure:  </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Structure:  </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Structure__c}</td>
                         </tr>
 
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Investment Stage:  </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Investment Stage: </span></td>
                             <td  class="vertical_align_top padding_top" width="75%">{!Contact.Investment_Stage__c}</td>
                         </tr>
 
                         <tr>
-                            <td  class="vertical_align_top padding_top" width="25%">Investment Industries:  </td>
+                            <td  class="vertical_align_top padding_top" width="25%"><span class="label_field">Investment Industries: </span></td>
                             <td  class="vertical_align_top padding_top"  width="75%">{!Contact.Investment_Industries__c}</td>
                         </tr>
                         
@@ -467,19 +467,21 @@
                     <table border="0" cellspacing="0" width="100%" class="related_items_relationships">
                         <thead> 
                             <tr>
-                                <th class="box_padding table_borders_rel  border_right" width="30%">Name</th>
+                                <th class="box_padding table_borders_rel  border_right" width="36%">Name</th>
                                 <th class="box_padding table_borders_rel border_right" width="17%">Job Title</th>
                                 <th class="box_padding table_borders_rel border_right" width="17%">Company</th>
                                 <th class="box_padding table_borders_rel border_right" width="18%">Office City</th>
-                                <th class="box_padding table_borders_rel " width="18%">Office Country</th>
+                                <th class="box_padding table_borders_rel " width="12%">Office Country</th>
                             </tr>
                         </thead>
                         <tbody>
                             <apex:variable var="count" value="{!1}" />
                             <apex:repeat value="{!contactsRelationships}" var="cr" >                   
                                     <tr>
-                                        <td  class="box_padding table_borders_rel" style="{!IF(cr.typeRelation=='child' ,'padding-left: 20px;', IF(cr.typeRelation=='grandchild' ,'padding-left: 40px;','padding-left: 60px;'))}">
-                                            {!cr.contact.FirstName} {!cr.contact.LastName}
+                                        <td  class="box_padding table_borders_rel" style="{!IF(cr.typeRelation=='child' ,'padding-left: 15px;', IF(cr.typeRelation=='grandchild' ,'padding-left: 35px;','padding-left: 55px;'))}">
+                                            <span style="{!IF(cr.typeRelation=='child' ,'display: block;', IF(cr.typeRelation=='grandchild' ,'display: none;','display: none;'))}"><span style="color: black;">&#8226;</span> {!cr.contact.FirstName} {!cr.contact.LastName}</span>
+                                            <span style="{!IF(cr.typeRelation=='child' ,'display: none;', IF(cr.typeRelation=='grandchild' ,'display: block;','display: none;'))}"><span style="color: blue;">&#8226;</span> {!cr.contact.FirstName} {!cr.contact.LastName}</span>
+                                            <span style="{!IF(cr.typeRelation=='child' ,'display: none;', IF(cr.typeRelation=='grandchild' ,'display: none;','display: block;'))}"><span style="color: red;">&#8226;</span> {!cr.contact.FirstName} {!cr.contact.LastName}</span>                                            
                                         </td>
                                         <td  class="box_padding table_borders_rel">
                                             {!cr.contact.Job_Title__c}
@@ -821,6 +823,9 @@
         </div>
         
         <div>
+            <br/>
+            <span class="section_header">Bio</span>
+            <hr/>
             <table cellspacing="0" border="0" width="100%">
                 <tr>
                     <td width="25%" valign="top" align="left">
