@@ -111,6 +111,86 @@ public class VFP_PDF_Contact_Controller {
             }
         }
     }
+
+    public String getFormattedDateWithDayOfMonthSuffix() {
+        // get a date
+        Date today = Date.today();
+
+        // use some parameter substitution to build the string
+        String formattedDate = String.format('{0} {1}, {2}', 
+                                            new List<String>{ 
+                                                getMonthName(today.month()), 
+                                                today.day() + getDayOfMonthSuffix(today.day()), 
+                                                String.valueOf(today.year()) 
+                                            });
+
+        return formattedDate;
+    }
+
+    public String getMonthName(Integer m){
+        Switch on m {
+            when 1 {
+                return 'January';
+            }
+            when 2 {
+                return 'February';
+            }
+            when 3 {
+                return 'March';
+            }
+            when 4 {
+                return 'April';
+            }
+            when 5 {
+                return 'May';
+            }
+            when 6 {
+                return 'June';
+            }
+            when 7 {
+                return 'July';
+            }
+            when 8 {
+                return 'August';
+            }
+            when 9 {
+                return 'September';
+            }
+            when 10 {
+                return 'October';
+            }
+            when 11 {
+                return 'November';
+            }
+            when 12 {
+                return 'December';
+            }
+            when else {
+                return '';
+            }
+         }
+    }
+
+    public String getDayOfMonthSuffix(Integer n) {
+        if (n == null) {
+            return '';
+        }
+
+        if (n >= 11 && n <= 13) {
+            return 'th';
+        }
+
+        Integer modResult = Math.mod(n, 10);        
+        if (modResult == 1) { 
+            return 'st'; 
+        } else if (modResult == 2) { 
+            return 'nd'; 
+        } else if (modResult == 3) { 
+            return 'rd'; 
+        } else { 
+            return 'th';
+        }
+    }
     
     public class clsContact {
         public String typeRelation {get; set;}

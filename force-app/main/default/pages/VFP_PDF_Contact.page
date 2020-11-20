@@ -453,7 +453,9 @@
                 <span>{!Contact.Name} - Update</span>
             </div>
             <div class="section">
-                <span class="section_header">July 8th, 2020</span>
+                <span class="section_header">
+                    <apex:outputText value="{!formattedDateWithDayOfMonthSuffix}"></apex:outputText>
+                </span>
                 <hr/>
                 <apex:outputText value="{!Contact.Client_Update1__c}" escape="false" />
             </div>
@@ -840,7 +842,7 @@
                 <tr>
                 	<td colspan="3">
                         <h3>{!Contact.Name}</h3>
-                       	<h3>{!Contact.LastName} Group, {!Contact.Job_Title__c}</h3>
+                       	<h3>{!Contact.Company__c}, {!Contact.Job_Title__c}</h3>
                         <apex:outputText value="{!Contact.Biography__c}" escape="false" />
                     </td>
                 </tr>
