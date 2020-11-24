@@ -118,7 +118,7 @@
             	font-weight: 900;
             }
 
-            .related_items {
+            .related_items, .items {
                 -Fs-table-paginate: paginate;
             }
 
@@ -196,6 +196,11 @@
             }
             .relationships_Network_border{
                 height: 21px;
+            }
+            .p_min > p{
+                line-height: normal ;
+                margin-top: 0 ;
+                margin-bottom: 0 ;
             }
         </style>
     </head>
@@ -421,10 +426,10 @@
                     <thead class="border_top">
                             <tr>
                                 <th class="box_padding table_borders border_top border_left" width="10%">#</th>
-                                <th class="box_padding table_borders border_top" width="25%">Introduction Name</th>
-                                <th class="box_padding table_borders border_top" width="15%">Contact</th>
-                                <th class="box_padding table_borders border_top" width="15%">Contact</th>
-                                <th class="box_padding table_borders border_top" width="15%">Contact</th>
+                                <th class="box_padding table_borders border_top" width="30%">Introduction Name</th>
+                                <th class="box_padding table_borders border_top" width="20%">Contact</th>
+                                <th class="box_padding table_borders border_top" width="20%">Contact</th>
+                                <!--<th class="box_padding table_borders border_top" width="15%">Contact</th>-->
                                 <th class="box_padding table_borders border_top" width="15%">Type of Introduction</th>
                                 <th class="box_padding table_borders border_top" width="15%">Introduction Date</th>
                             </tr>
@@ -437,7 +442,7 @@
                                     <td  class="box_padding table_borders">  {!introduction.Name}</td>
                                     <td  class="box_padding table_borders"> {!introduction.Contact__r.Name}</td>
                                     <td  class="box_padding table_borders">  {!introduction.Contact2__r.Name}</td>
-                                    <td  class="box_padding table_borders">  {!introduction.Contact_3__r.Name}</td>
+                                    <!--<td  class="box_padding table_borders">  {!introduction.Contact_3__r.Name}</td>-->
                                     <td  class="box_padding table_borders">  {!introduction.Type_of_Introduction__c}</td>
                                     <td  class="box_padding table_borders">  <apex:outputText value="{0, date, MM'-'dd'-'yyyy}"><apex:param value="{!introduction.Introduction_Date__c}" /></apex:outputText></td>
                                 </tr>
@@ -457,7 +462,9 @@
                     <apex:outputText value="{!formattedDateWithDayOfMonthSuffix}"></apex:outputText>
                 </span>
                 <hr/>
-                <apex:outputText value="{!Contact.Client_Update1__c}" escape="false" />
+                <div class="p_min">
+                    <apex:outputText style="line-height: normal important!;" value="{!Contact.Client_Update1__c}" escape="false" />
+                </div>
             </div>
         </div>
         
@@ -843,7 +850,9 @@
                 	<td colspan="3">
                         <h3>{!Contact.Name}</h3>
                        	<h3>{!Contact.Company__c}, {!Contact.Job_Title__c}</h3>
-                        <apex:outputText value="{!Contact.Biography__c}" escape="false" />
+                        <div class="p_min">                           
+                           <apex:outputText value="{!Contact.Biography__c}" escape="false" />
+                        </div>
                     </td>
                 </tr>
             </table>

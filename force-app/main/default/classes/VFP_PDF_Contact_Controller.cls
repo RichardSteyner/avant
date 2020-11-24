@@ -6,6 +6,9 @@ public class VFP_PDF_Contact_Controller {
     public List<Introductions__c> introductions {get; set;}
     public List<Scheduling__c> schedulings {get; set;}
     public List<clsContact> contactsRelationships {get; set;}
+
+    public String auxClientUpdate {get; set;}
+    public String auxBiography {get; set;}
     
     public VFP_PDF_Contact_Controller(ApexPages.StandardController stdController) {
         this.parentId = String.escapeSingleQuotes(stdController.getId());
@@ -20,9 +23,14 @@ public class VFP_PDF_Contact_Controller {
        		this.hasPicture = true;
        	}
         
+        /*Contact auxC = [select Id, Client_Update1__c, Biography__c from Contact where Id =: stdController.getId()];
+        auxClientUpdate = auxC.Client_Update1__c!=null ? auxC.Client_Update1__c.replaceAll('<p><br></p>', '') : '';
+        auxBiography = auxC.Biography__c!=null ? auxC.Biography__c.replaceAll('<p><br></p>', '') : '';*/
+
         introductions = [SELECT Name, Contact__r.Name, Contact2__r.Name, Contact_3__r.Name, Type_of_Introduction__c, Introduction_Date__c
-                         FROM Introductions__c 
-                        WHERE Contact__c =: stdController.getId() OR Contact2__c =: stdController.getId() OR Contact_3__c =: stdController.getId()];
+                            FROM Introductions__c 
+                            WHERE Contact__c =: stdController.getId() OR Contact2__c =: stdController.getId()  
+                            order by Type_of_Introduction__c];
         
         schedulings = [ SELECT Name, Type__c, Lead__r.Name, Status__c,Confirmed_Date__c,Notes__c 
                         FROM Scheduling__c
