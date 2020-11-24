@@ -470,7 +470,6 @@
                 <div class="p_min">
                     <apex:outputText value="{!Contact.Client_Update1__c}" escape="false" />
                 </div>
-                {!Contact.Client_Update1__c}
             </div>
         </div>
         
