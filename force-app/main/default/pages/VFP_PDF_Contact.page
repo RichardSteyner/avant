@@ -202,6 +202,11 @@
                 margin-top: 0 ;
                 margin-bottom: 0 ;
             }
+            .p_min > ol{
+                line-height: normal ;
+                margin-top: 0 ;
+                margin-bottom: 0 ;
+            }
         </style>
     </head>
     
@@ -463,8 +468,9 @@
                 </span>
                 <hr/>
                 <div class="p_min">
-                    <apex:outputText style="line-height: normal important!;" value="{!Contact.Client_Update1__c}" escape="false" />
+                    <apex:outputText value="{!Contact.Client_Update1__c}" escape="false" />
                 </div>
+                {!Contact.Client_Update1__c}
             </div>
         </div>
         
