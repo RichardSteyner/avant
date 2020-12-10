@@ -660,15 +660,13 @@
                     <table border="0" cellspacing="0" width="100%" class="related_items" style="{!IF(count==0 ,'display: none;','')}">
                         <thead>
                                 <tr>
-                                    <th class="box_padding table_borders border_top border_left" width="7%">#</th>
-                                    <th class="box_padding table_borders border_top" width="12%">Opportunity Name</th>
-                                    <th class="box_padding table_borders border_top" width="11%">Facilitator</th>
-                                    <th class="box_padding table_borders border_top" width="11%">Stage</th>
-                                    <th class="box_padding table_borders border_top" width="11%">Amount</th>
-                                    <th class="box_padding table_borders border_top" width="16%">Notes</th>
-                                    <th class="box_padding table_borders border_top" width="11%">Appointment Type</th>
-                                    <th class="box_padding table_borders border_top" width="10%">Status</th>
-                                    <th class="box_padding table_borders border_top" width="11%">Lead</th>
+                                    <th class="box_padding table_borders border_top border_left" width="10%">#</th>
+                                    <th class="box_padding table_borders border_top" width="18%">Record Type</th>
+                                    <th class="box_padding table_borders border_top" width="18%">Opportunity Name</th>
+                                    <th class="box_padding table_borders border_top" width="15%">Facilitator</th>
+                                    <th class="box_padding table_borders border_top" width="12%">Stage</th>
+                                    <th class="box_padding table_borders border_top" width="12%">Amount</th>
+                                    <th class="box_padding table_borders border_top" width="15%">Created Date</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -676,14 +674,16 @@
                             <apex:repeat value="{!Contact.Opportunities}" var="opp" >                   
                                     <tr>
                                         <td  class="box_padding table_borders border_left" align="right">{!count}</td>
+                                        <td  class="box_padding table_borders">{!opp.RecordType.Name}</td>
                                         <td  class="box_padding table_borders">{!opp.Name}</td>
                                         <td  class="box_padding table_borders">{!opp.Facilitator__c}</td>
                                         <td  class="box_padding table_borders">{!opp.StageName}</td>
                                         <td  class="box_padding table_borders">{!opp.Amount}</td>
-                                        <td  class="box_padding table_borders">{!opp.Notes__c}</td>
-                                        <td  class="box_padding table_borders">{!opp.Appointment_Type__c}</td>
-                                        <td  class="box_padding table_borders">{!opp.Status__c}</td>
-                                        <td  class="box_padding table_borders">{!opp.Lead__c}</td>
+                                        <td  class="box_padding table_borders">
+                                            <apex:outputText value="{0, date, MM'-'dd'-'yyyy}">
+                                                <apex:param value="{!opp.CreatedDate}" />
+                                            </apex:outputText>
+                                        </td>
                                     </tr>
                                     <apex:variable var="count" value="{!count + 1}" />
                             </apex:repeat>   

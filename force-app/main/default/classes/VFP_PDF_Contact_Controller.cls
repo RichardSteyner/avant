@@ -30,7 +30,7 @@ public class VFP_PDF_Contact_Controller {
         introductions = [SELECT Name, Contact__r.Name, Contact2__r.Name, Contact_3__r.Name, Type_of_Introduction__c, Introduction_Date__c
                             FROM Introductions__c 
                             WHERE Contact__c =: stdController.getId() OR Contact2__c =: stdController.getId()  
-                            order by Type_of_Introduction__c];
+                            order by Type_of_Introduction__c, Introduction_Date__c desc];
         
         schedulings = [ SELECT Name, Type__c, Lead__r.Name, Status__c,Confirmed_Date__c,Notes__c 
                         FROM Scheduling__c
@@ -180,24 +180,15 @@ public class VFP_PDF_Contact_Controller {
     }
 
     public String getDayOfMonthSuffix(Integer n) {
-        if (n == null) {
-            return '';
-        }
+        if (n == null)  return '';
 
-        if (n >= 11 && n <= 13) {
-            return 'th';
-        }
+        if (n >= 11 && n <= 13) return 'th';
 
         Integer modResult = Math.mod(n, 10);        
-        if (modResult == 1) { 
-            return 'st'; 
-        } else if (modResult == 2) { 
-            return 'nd'; 
-        } else if (modResult == 3) { 
-            return 'rd'; 
-        } else { 
-            return 'th';
-        }
+        if (modResult == 1) return 'st'; 
+        else if (modResult == 2) return 'nd'; 
+        else if (modResult == 3) return 'rd'; 
+        else return 'th';
     }
     
     public class clsContact {
